@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <title>Group Chat</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/main.css" rel="stylesheet">
+   <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
+  <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+  <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+  <script src="/chat.js"></script>
+</head>
+
+<body>
+  <div id="main-content" class="container">
+  <div style="margin-bottom: 30px; margin-left: 2px">
+  <span>Made with <span style="color: #e25555;">&#10084;</span>  
+                    by Dhaval Panjwani</span>
+                    <br>
+                    </div>
+  
+    <div class="row">
+      <div class="col-md-12 space-bottom10">
+        <form class="form-inline">
+       
+          <div class="form-group">
+            <label for="from">Username?</label>
+            <input type="text" id="from" class="form-control" placeholder="enter your username...">
+          </div>
+          <button id="connect" class="btn btn-default" type="submit">Join Session</button>
+          <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Leave Session</button>
+                
+        </form>
+                    
+      </div>
+    </div>
+
+    <div>
+      <br>
+      <p i="scheduledPush"></p>
+      </br>
+    </div>
+    <div class="row space-bottom10">
+      <form>
+        <div class="col-md-2">
+          <select name="topic" id="topic" class="form-control">
+                <option value="" disabled selected hidden>Choose a Topic to Chat</option>
+            <option>Corona</option>
+            <option>Music</option>
+            <option>Sports</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <input type="text" id="text" class="form-control" placeholder="Type your message here...">
+        </div>
+        <div class="col-md-4">
+          <button id="send" class="btn btn-default" type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+    <div>
+      <b>
+        <p id="scheduledPush"></p>
+      </b>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table id="conversation" class="table table-striped">
+          <thead>
+            <tr>
+              <th width="10%">From</th>
+              <th width="15%">Category</th>
+              <th width="60%">Message</th>
+              <th width="10%">TimeStamp</th>
+            </tr>
+          </thead>
+          <tbody id="messages">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
