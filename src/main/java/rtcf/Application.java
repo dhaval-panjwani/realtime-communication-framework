@@ -1,8 +1,7 @@
-package sample;
+package rtcf;
 
 import javax.jms.ConnectionFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,16 +11,11 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import sample.messaging.Publisher;
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableScheduling
 
 public class Application {
-
-	@Autowired
-	private Publisher publisher;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

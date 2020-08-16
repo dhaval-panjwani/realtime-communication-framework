@@ -50,7 +50,8 @@ $(function () {
 	$('#connect').click(function () {
 
 		console.log("Inside connect!");
-		client = Stomp.over(new SockJS('/chat'));
+		var ourUrl = "/rtcf?interests=myFirstInterest"
+		client = Stomp.over(new SockJS(ourUrl));
 		client.connect({}, function (frame) {
 			setConnected(true);
 			client.subscribe('/user/topic/messages', function (message) {
@@ -58,7 +59,7 @@ $(function () {
 			});
 		});
 
-		scheduledPush = Stomp.over(new SockJS('/chat'));
+		scheduledPush = Stomp.over(new SockJS('/rtcf'));
 		console.log("Connecting to scheduled push");
 		scheduledPush.connect({}, function (frame) {
 			scheduledPush.subscribe('/topic/scheduledpush', function (message) {
@@ -78,9 +79,10 @@ $(function () {
 	});
 
 	$('#send').click(function () {
+		var interests = ["firstInterest","secondInterest"];
 		var topic = $('#topic').val();
-		client.send("/app/chat/" + topic, {}, JSON.stringify({
-			from: $("#from").val(),
+		client.send("/app/interests/subscribe", {}, JSON.stringify({
+			interests: interests,
 			text: $('#text').val(),
 		}));
 		$('#text').val("");
@@ -89,7 +91,7 @@ $(function () {
 	$('#topic').change(function () {
 		var topic = $('#topic').val();
 		console.log("Inside client send method with topic as " + topic);
-		client.send("/app/chat/" + topic, {}, JSON.stringify({
+		client.send("/app/interests/subscribe", {}, JSON.stringify({
 			from: $("#from").val(),
 			text: '',
 		}));

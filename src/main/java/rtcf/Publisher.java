@@ -1,6 +1,6 @@
-package sample.messaging;
+package rtcf;
 
-import static config.ActiveMQConfig.TOPIC;
+import static rtcf.config.ActiveMQConfig.TOPIC;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import sample.OutputMessage;
 
 @Service
 public class Publisher {

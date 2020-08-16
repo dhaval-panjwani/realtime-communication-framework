@@ -1,4 +1,4 @@
-package sample;
+package rtcf.handshake;
 
 import java.util.Map;
 
@@ -12,6 +12,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 public class HttpHandshakeInterceptor implements HandshakeInterceptor {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map attributes) throws Exception {

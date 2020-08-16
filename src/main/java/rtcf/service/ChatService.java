@@ -1,4 +1,4 @@
-package sample;
+package rtcf.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import sample.messaging.Publisher;
+import rtcf.OutputMessage;
+import rtcf.Publisher;
+import rtcf.model.Message;
 
 @Service
 public class ChatService {
@@ -26,13 +28,13 @@ public class ChatService {
 	// this will send messages to only those users subscribed to this topic
 	public void subscibeOrsendMessagesByTopic(String topic, Message message, String sessionId) {
 		addUserName(sessionId, topic);
-		if (message.getText().isEmpty())
-			return;
-
-		OutputMessage output = new OutputMessage(message.getFrom(), message.getText(), topic);
+//		if (message.getText().isEmpty())
+//			return;
+//
+//		OutputMessage output = new OutputMessage(message.getFrom(), message.getText(), topic);
 
 		// sending message to clients not on this server
-		this.publisher.sendTopic(output);
+		// this.publisher.sendTopic(output);
 
 		// sending message to clients on this server
 		// this.sendMessageToUsers(topic, output);

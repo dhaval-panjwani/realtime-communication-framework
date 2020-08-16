@@ -1,6 +1,6 @@
-package sample.messaging;
+package rtcf;
 
-import static config.ActiveMQConfig.TOPIC;
+import static rtcf.config.ActiveMQConfig.TOPIC;
 
 import javax.jms.Message;
 import javax.jms.Session;
@@ -16,8 +16,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import sample.ChatService;
-import sample.OutputMessage;
+import rtcf.service.ChatService;
 
 @Component
 public class Subscriber {
