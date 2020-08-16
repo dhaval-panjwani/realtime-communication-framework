@@ -1,37 +1,34 @@
 package rtcf.config;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 
 @EnableJms
 @Configuration
 public class ActiveMQConfig {
 
-	public static final String TOPIC = "chatGroupTopic";
+	@Value("${rtcf.activemq.broker-url}")
+	private String brokerUrl;
 
 	@Bean
-	public MessageConverter messageConverter() {
-		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-		converter.setTargetType(MessageType.TEXT);
-		converter.setTypeIdPropertyName("_type");
-		converter.setObjectMapper(objectMapper());
-		return converter;
+	public ActiveMQConnectionFactory receiverActiveMQConnectionFactory() {
+		ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
+		activeMQConnectionFactory.setBrokerURL(brokerUrl);
+
+		return activeMQConnectionFactory;
 	}
 
 	@Bean
-	public ObjectMapper objectMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.registerModule(new JavaTimeModule());
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		return mapper;
+	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
+		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+		factory.setConnectionFactory(receiverActiveMQConnectionFactory());
+		factory.setPubSubDomain(true);
+
+		return factory;
 	}
 
 }

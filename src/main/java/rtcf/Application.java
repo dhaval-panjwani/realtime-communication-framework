@@ -1,19 +1,15 @@
 package rtcf;
 
-import javax.jms.ConnectionFactory;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableScheduling
+@EnableJms
 
 public class Application {
 
@@ -46,12 +42,32 @@ public class Application {
 //		System.exit(-1);
 //	}
 
-	@Bean
-	public JmsListenerContainerFactory<?> topicListenerFactory(ConnectionFactory connectionFactory,
-			DefaultJmsListenerContainerFactoryConfigurer configurer) {
-		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-		configurer.configure(factory, connectionFactory);
-		factory.setPubSubDomain(true);
-		return factory;
-	}
+//	@Bean
+//	public JmsListenerContainerFactory<?> topicListenerFactory(ConnectionFactory connectionFactory,
+//			DefaultJmsListenerContainerFactoryConfigurer configurer) {
+//		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+//		configurer.configure(factory, connectionFactory);
+//		factory.setPubSubDomain(true);
+//		SimpleMessageConverter s = new SimpleMessageConverter();
+//		MappingJackson2MessageConverter s2 = new MappingJackson2MessageConverter();
+//		s2.setTargetType(MessageType.BYTES);
+//		s2.setTypeIdPropertyName("DocumentType");
+//		s2.setTypeIdPropertyName("_type");
+//		factory.setMessageConverter(s2); // or "s"
+//		return factory;
+//	}
+//
+//	@Bean
+//	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
+//		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+//		factory.setConnectionFactory(connectionFactory);
+//		factory.setConcurrency("3-10");
+//		SimpleMessageConverter s = new SimpleMessageConverter();
+//		MappingJackson2MessageConverter s2 = new MappingJackson2MessageConverter();
+//		s2.setTargetType(MessageType.BYTES);
+//		s2.setTypeIdPropertyName("DocumentType");
+//		factory.setMessageConverter(s2); // or "s"
+//		return factory;
+//	}
+
 }

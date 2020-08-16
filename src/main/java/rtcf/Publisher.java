@@ -1,7 +1,5 @@
 package rtcf;
 
-import static rtcf.config.ActiveMQConfig.TOPIC;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
@@ -25,7 +23,7 @@ public class Publisher {
 		String messageSent;
 		try {
 			messageSent = objectMapper.writeValueAsString(message);
-			jmsTemplate.convertAndSend(TOPIC, messageSent);
+			jmsTemplate.convertAndSend("XD", messageSent);
 		} catch (JsonProcessingException e) {
 			System.out.println("Message sending failed. Due to exception " + e.getMessage());
 			e.printStackTrace();
