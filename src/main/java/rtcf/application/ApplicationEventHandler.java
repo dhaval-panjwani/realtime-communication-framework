@@ -4,6 +4,6 @@ import rtcf.model.ClientOutput;
 
 public interface ApplicationEventHandler {
 
-	public ClientOutput<?> processAndTransformEvent(String message);
+	public ClientOutput processAndTransformEvent(String message);
 
 }
