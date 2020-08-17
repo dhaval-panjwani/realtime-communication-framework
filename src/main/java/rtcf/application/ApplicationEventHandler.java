@@ -1,7 +1,9 @@
 package rtcf.application;
 
+import rtcf.model.ClientOutput;
+
 public interface ApplicationEventHandler {
 
-	public String processAndTransformEvent(String message);
+	public ClientOutput<?> processAndTransformEvent(String message);
 
 }

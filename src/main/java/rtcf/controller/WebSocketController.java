@@ -3,7 +3,6 @@ package rtcf.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 
 import rtcf.model.Message;
@@ -14,13 +13,6 @@ public class WebSocketController {
 
 	@Autowired
 	SubscribeService subService;
-
-	@Autowired
-	private SimpUserRegistry simpUserRegistry;
-
-	public int getNumberOfSessions() {
-		return simpUserRegistry.getUserCount();
-	}
 
 	@MessageMapping("/interests/subscribe")
 	public void send(Message message, SimpMessageHeaderAccessor headerAccessor) throws Exception {
