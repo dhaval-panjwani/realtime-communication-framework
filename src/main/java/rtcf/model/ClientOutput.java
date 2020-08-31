@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ClientOutput {
 	List<String> interests;
-	String content;
+	String message;
 
 	public List<String> getInterests() {
 		return interests;
@@ -14,12 +14,12 @@ public class ClientOutput {
 		this.interests = interests;
 	}
 
-	public String getContent() {
-		return content;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override
@@ -27,8 +27,8 @@ public class ClientOutput {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ClientOutput [interests=");
 		builder.append(interests);
-		builder.append(", content=");
-		builder.append(content);
+		builder.append(", message=");
+		builder.append(message);
 		builder.append("]");
 		return builder.toString();
 	}

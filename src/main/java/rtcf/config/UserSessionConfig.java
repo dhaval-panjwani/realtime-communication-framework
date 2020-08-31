@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserSessionConfig {
 	@Bean
-	public Map<String, HashSet<String>> userTopicOfInterests() {
-		Map<String, HashSet<String>> userTopicOfInterests = new ConcurrentHashMap<String, HashSet<String>>();
-		return userTopicOfInterests;
+	public Map<String, HashSet<String>> interestsToUsers() {
+		Map<String, HashSet<String>> interestsToUsers = new ConcurrentHashMap<String, HashSet<String>>();
+		return interestsToUsers;
 	}
 }

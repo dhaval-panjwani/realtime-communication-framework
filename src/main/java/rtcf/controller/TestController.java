@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class TestController {
+public final class TestController {
 	@GetMapping("/greetingInrtcf")
 	public @ResponseBody String greetingWishes() {
 		System.out.println("Inside rest greeting");

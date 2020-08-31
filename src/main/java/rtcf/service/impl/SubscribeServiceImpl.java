@@ -10,16 +10,22 @@ import org.springframework.stereotype.Service;
 import rtcf.service.SubscribeService;
 
 @Service
-public class SubscribeServiceImpl implements SubscribeService {
+public final class SubscribeServiceImpl implements SubscribeService {
 
 	@Autowired
-	Map<String, HashSet<String>> userTopicOfInterests;
+	Map<String, HashSet<String>> interestsToUsers;
 
 	@Override
 	public void subscribeUserInterests(String userSessionId, List<String> interests) {
-		if (userTopicOfInterests.containsKey(userSessionId)) {
-			userTopicOfInterests.put(userSessionId, new HashSet<>());
+		
+		for(String interest : interests) {
+			if(interestsToUsers.containsKey(interest)) {
+				interestsToUsers.get(interest).add(userSessionId);
+			} else {
+				HashSet<String> newInterestSet = new HashSet<>();
+				newInterestSet.add(userSessionId);
+				interestsToUsers.put(interest, newInterestSet);
+			}
 		}
-		userTopicOfInterests.put(userSessionId, new HashSet<>(interests));
 	}
 }

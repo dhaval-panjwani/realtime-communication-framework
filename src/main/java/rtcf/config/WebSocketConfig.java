@@ -3,22 +3,26 @@ package rtcf.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
 
 import rtcf.handshake.HttpHandshakeInterceptor;
+import rtcf.handshake.CustomHandshakeHandler;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer  {
 
 	@Value("${rtcf.application.prefix}")
 	private String appDestinationPrefix;
 
 	@Value("${rtcf.websocket.endpoint}")
 	private String webSocketConnectionEndpoint;
+	
+	CustomHandshakeHandler cust;
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -29,7 +33,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint(webSocketConnectionEndpoint).setAllowedOrigins("*")
-				.addInterceptors(new HttpHandshakeInterceptor()).setHandshakeHandler(new DefaultHandshakeHandler())
+				.setHandshakeHandler(new CustomHandshakeHandler())
 				.withSockJS().setClientLibraryUrl("/webjars/sockjs-client/1.0.2/sockjs.min.js");
 	}
 }

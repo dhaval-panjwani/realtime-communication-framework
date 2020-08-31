@@ -1,17 +1,24 @@
 package rtcf.handshake;
 
+import java.security.Principal;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
-/**
- * Set anonymous user (Principal) in WebSocket messages by using UUID This is
- * necessary to avoid broadcasting messages but sending them to specific user
- * sessions
- */
+import rtcf.model.StompPrincipal;
+
 public class CustomHandshakeHandler extends DefaultHandshakeHandler {
-//	@Override
-//	protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
-//			Map<String, Object> attributes) {
-//		// generate user name by UUID
-//		return new StompPrincipal(UUID.randomUUID().toString());
-//	}
+    // Custom class for storing principal
+    @Override
+    protected Principal determineUser(
+        ServerHttpRequest request,
+        WebSocketHandler wsHandler,
+        Map<String, Object> attributes
+    ) {
+        // Generate principal with UUID as name
+        return new StompPrincipal(UUID.randomUUID().toString());
+    }
 }

@@ -1,4 +1,4 @@
-package rtcf;
+package rtcf.model;
 
 import java.security.Principal;
 
