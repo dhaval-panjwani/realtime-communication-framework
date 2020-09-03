@@ -11,5 +11,4 @@ public final class TestController {
 		System.out.println("Inside rest greeting");
 		return "Hello world";
 	}
-
 }

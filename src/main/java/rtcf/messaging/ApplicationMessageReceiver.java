@@ -1,5 +1,8 @@
 package rtcf.messaging;
 
+import javax.jms.Message;
+
+import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +10,9 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import rtcf.application.ApplicationEventHandler;
-import rtcf.model.ClientOutput;
+import rtcf.error.DefaultErrorHandler;
+import rtcf.model.ApplicationEventRequest;
+import rtcf.model.ApplicationEventResponse;
 import rtcf.service.PublishService;
 
 @Component
@@ -17,17 +22,27 @@ public class ApplicationMessageReceiver {
 
 	@Autowired
 	private ApplicationEventHandler applicationEventHandler;
-	
+
 	@Autowired
 	private PublishService publishService;
+	
+	@Autowired
+	private DefaultErrorHandler customErrorHandler;
 
+	@SuppressWarnings("rawtypes")
 	@JmsListener(destination = "${rtcf.messaging-queue.topic}")
-	public void receiveApplicationMsgFromTopic(String message) {
-		System.out.println("Received message='{}'" + message);
-		logger.debug("Message received : {}", message);
-		ClientOutput processedOutput = this.applicationEventHandler.processAndTransformEvent(message);
-		logger.debug("Processed output : {}", processedOutput.toString());
-		System.out.println("Output msg is : " + processedOutput.toString());
-		this.publishService.sendMsgToUsers(processedOutput);
+	public void receiveApplicationMsgFromTopic(ApplicationEventRequest eventRequest) {
+		System.out.println("Received event='{}'" + eventRequest);
+		logger.debug("Message event : {}", eventRequest);
+		try {
+			ApplicationEventResponse processedOutput = this.applicationEventHandler
+					.processAndTransformEvent(eventRequest);
+			logger.debug("Processed output : {}", processedOutput.toString());
+			System.out.println("Output msg is : " + processedOutput.toString());
+			this.publishService.sendMsgToUsers(processedOutput);
+		} catch (Exception ex) {
+			this.customErrorHandler.handleError(eventRequest, ex);
+		}
 	}
+
 }

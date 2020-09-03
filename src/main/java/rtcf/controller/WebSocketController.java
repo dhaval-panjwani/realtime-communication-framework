@@ -15,7 +15,7 @@ public final class WebSocketController {
 	SubscribeService subService;
 
 	@MessageMapping("/interests")
-	public void getInterests(Message message, SimpMessageHeaderAccessor headerAccessor) throws Exception {
+	public void subscribeInterests(Message message, SimpMessageHeaderAccessor headerAccessor) throws Exception {
 		String sessionId = headerAccessor.getUser().getName();
 //		String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
 		headerAccessor.setSessionId(sessionId);

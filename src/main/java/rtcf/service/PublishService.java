@@ -1,7 +1,7 @@
 package rtcf.service;
 
-import rtcf.model.ClientOutput;
+import rtcf.model.ApplicationEventResponse;
 
 public interface PublishService {
-	public void sendMsgToUsers(ClientOutput output);
+	public void sendMsgToUsers(ApplicationEventResponse eventResponse);
 }

@@ -1,9 +1,11 @@
 package rtcf.application;
 
-import rtcf.model.ClientOutput;
+import rtcf.model.ApplicationEventRequest;
+import rtcf.model.ApplicationEventResponse;
 
 public interface ApplicationEventHandler {
 
-	public ClientOutput processAndTransformEvent(String message);
+	@SuppressWarnings("rawtypes")
+	public ApplicationEventResponse processAndTransformEvent(ApplicationEventRequest eventRequest) throws Exception;
 
 }

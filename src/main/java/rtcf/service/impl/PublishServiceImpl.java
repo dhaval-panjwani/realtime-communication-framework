@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import rtcf.model.ClientOutput;
+import rtcf.model.ApplicationEventResponse;
 import rtcf.service.PublishService;
 
 @Service
@@ -26,11 +26,12 @@ public class PublishServiceImpl implements PublishService {
 	@Autowired
 	Map<String, HashSet<String>> interestsToUsers;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void sendMsgToUsers(ClientOutput output) {
-		System.out.println("Output msg in sendMsgToUsers is : " + output.toString());
-		List<String> interests = output.getInterests();
-		String clientMessage = output.getMessage();
+	public void sendMsgToUsers(ApplicationEventResponse eventResponse) {
+		System.out.println("Output msg in sendMsgToUsers is : " + eventResponse.getContent().toString());
+		List<String> interests = eventResponse.getInterests();
+		String clientMessage = eventResponse.getContent().toString();
 		if (interests != null && !interests.isEmpty()) {
 			for (String interest : interests) {
 				System.out.println("Visiting interest : " + interest);
