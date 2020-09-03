@@ -37,5 +37,19 @@ public class ScheduledUpdates {
 //		jmsTemplate.setPubSubDomain(true);
 //	    jmsTemplate.convertAndSend("applicationTopic", new ApplicationEventRequest(headers,str));
 	}
+	
+	@Scheduled(fixedDelay = 10000)
+	public void publishUpdatesDemo() {
+		Map<String,String> headers = new HashMap<>();
+		
+		headers.put("type", "Pizza");
+		String str = "{\r\n" + 
+				"        \"message\" : \"Hello world\",\r\n" + 
+				"        \"interest\" : \"Pizza\"\r\n" + 
+				"                    }";
+		jmsTemplate.setPubSubDomain(true);
+	    jmsTemplate.convertAndSend("applicationTopic", new ApplicationEventRequest(headers,str));
+	}
+	
 
 }

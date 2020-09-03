@@ -10,6 +10,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import rtcf.application.ApplicationEventHandler;
+import rtcf.application.ApplicationEventHandlerFactory;
 import rtcf.error.DefaultErrorHandler;
 import rtcf.model.ApplicationEventRequest;
 import rtcf.model.ApplicationEventResponse;
@@ -21,11 +22,11 @@ public class ApplicationMessageReceiver {
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationMessageReceiver.class);
 
 	@Autowired
-	private ApplicationEventHandler applicationEventHandler;
+	private ApplicationEventHandlerFactory eventHandlerFactory;
 
 	@Autowired
 	private PublishService publishService;
-	
+
 	@Autowired
 	private DefaultErrorHandler customErrorHandler;
 
@@ -35,8 +36,8 @@ public class ApplicationMessageReceiver {
 		System.out.println("Received event='{}'" + eventRequest);
 		logger.debug("Message event : {}", eventRequest);
 		try {
-			ApplicationEventResponse processedOutput = this.applicationEventHandler
-					.processAndTransformEvent(eventRequest);
+			ApplicationEventHandler applicationEventHandler = this.eventHandlerFactory.createEventHandler(eventRequest);
+			ApplicationEventResponse processedOutput = applicationEventHandler.processAndTransformEvent(eventRequest);
 			logger.debug("Processed output : {}", processedOutput.toString());
 			System.out.println("Output msg is : " + processedOutput.toString());
 			this.publishService.sendMsgToUsers(processedOutput);
